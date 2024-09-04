@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connexion</title>
+    <link rel="stylesheet" type="text/css" href="login.css">
+
+</head>
+<body>
+    <h2>Connexion</h2>
+    <form id="login-form">
+        <label for="username">Nom d'utilisateur :</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Mot de passe :</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <button type="submit">Se connecter</button>
+    </form>
+    <div id="message"></div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.getElementById('login-form');
+        const message = document.getElementById('message');
+
+        // Vérifier si des informations de connexion sont déjà stockées
+        const storedUsername = localStorage.getItem('username');
+        const storedPassword = localStorage.getItem('password');
+
+        if (storedUsername && storedPassword) {
+            loginForm.elements['username'].value = storedUsername;
+            loginForm.elements['password'].value = storedPassword;
+        }
+
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = loginForm.elements['username'].value;
+            const password = loginForm.elements['password'].value;
+
+            // Vérifier les informations de connexion
+            if (username && password) {
+                // Authentification réussie, stocker les informations d'identification
+                localStorage.setItem('username', username);
+                localStorage.setItem('password', password);
+                // Rediriger vers la page de la To-Do List
+                window.location.href = 'index.html';
+            } else {
+                // Afficher un message d'erreur
+                message.textContent = 'Nom d\'utilisateur ou mot de passe incorrect.';
+            }
+        });
+    });
+    </script>
+</body>
+</html>
